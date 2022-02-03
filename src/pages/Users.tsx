@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-const Users = () => {
-  
+const Users = (props: {name: string}) => {
+
   return (
-    <div>For authenticated Users</div>
-  );
+  <div>
+    <h1>USERS PAGE For authenticated Users</h1>
+    <h2>{props.name ? 'Hi ' + props.name + '!' : 'You are not logged in!'}</h2>
+
+  </div>);
 };
 
 export default Users;
