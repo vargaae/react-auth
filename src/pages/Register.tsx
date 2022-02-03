@@ -1,16 +1,18 @@
 import React, { SyntheticEvent, useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/api/register", {
+    await fetch("http://localhost:8000/api/register", {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
         email,
@@ -18,10 +20,12 @@ const Register = () => {
       }),
     });
 
-    const content = await response.json();
-
-    console.log(content)
+    setRedirect(true);
   };
+
+  if (redirect) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <form onSubmit={submit}>
