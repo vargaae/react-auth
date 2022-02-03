@@ -8,33 +8,35 @@ import Register from "./pages/Register";
 import Users from "./pages/Users";
 
 function App() {
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
 
-  useEffect(() => {
-    (
-      async () => {
-      const response = await fetch("http://localhost:8000/api/user", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+    useEffect(() => {
+        (
+            async () => {
+                const response = await fetch('http://localhost:8000/api/user', {
+                    headers: {'Content-Type': 'application/json'},
+                    credentials: 'include',
+                });
 
-      const content = await response.json()
+                const content = await response.json();
 
-      setName(content.name)
-    })();
-  });
+                setName(content.name);
+            }
+        )();
+    });
   
   return (
     <div className="App">
-      <Nav name={name}/>
+      <Nav name={name} setName={setName}/>
       <header className="App-header">
         <main className="form-signin">
           <Routes>
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={() => <Login setName={setName}  />} /> */}
             <Route path="/register" element={<Register />} />
-            <Route path="/users" element={() => <Users name={name} />} />
+            <Route path="/users" element={<Users />} />
+            {/* <Route path="/users" element={() => <Users name={name} />} /> */}
           </Routes>
         </main>
       </header>
